@@ -2,14 +2,18 @@ package org.example.assignment1.model;
 
 import org.springframework.stereotype.Component;
 
+// created a User bean that stores user related information
 @Component
 public class User {
+
+    // attributes for each user such as ID, first and last name, and contact details
     private int id;
     private String firstName;
     private String lastName;
     private String email;
     private int phoneNumber;
 
+    // getters and setters
     public int getID() {
         return id;
     }
@@ -45,6 +49,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    // toString function
     @Override
     public String toString() {
         return "User{" +

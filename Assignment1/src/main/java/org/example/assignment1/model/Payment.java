@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 //created a bean for our payment class which will be used to make the user have a simple payment experience
 @Component
 public class Payment {
+
+    //created our attributes that are related to our payment class with appropriate data types
+    // the payment class will have attributes that are needed
     private int paymentID;
     private String paymentMethod;
     private double paymentAmount;
     private String paymentStatus;
-
-    //created our attributes that are related to our payment class with appropriate data types
-    // the payment class will have attributes that are needed
 
     //made the getters and setters
     public int getPaymentID() {

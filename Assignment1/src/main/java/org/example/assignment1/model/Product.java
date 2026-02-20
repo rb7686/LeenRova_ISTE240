@@ -5,15 +5,14 @@ import org.springframework.stereotype.Component;
 //created a bean for our product class
 @Component
 public class Product {
+
+    //created our attributes that are related to our product class
+    // the products we have will have attributes that are suitable for them
     private int id;
     private String productName;
     private String color;
     private String size;
     private int price;
-
-    //created our attributes that are related to our product class
-    // the products we have will have attributes that are suitable for them
-
 
     //made the getters and setters
     public int getId() {
