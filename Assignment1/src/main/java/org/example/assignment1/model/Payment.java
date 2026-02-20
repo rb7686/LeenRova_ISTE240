@@ -2,6 +2,7 @@ package org.example.assignment1.model;
 
 import org.springframework.stereotype.Component;
 
+//created a bean for our payment class which will be used to make the user have a simple payment experience
 @Component
 public class Payment {
     private int paymentID;
@@ -9,6 +10,10 @@ public class Payment {
     private double paymentAmount;
     private String paymentStatus;
 
+    //created our attributes that are related to our payment class with appropriate data types
+    // the payment class will have attributes that are needed
+
+    //made the getters and setters
     public int getPaymentID() {
         return paymentID;
     }
@@ -37,6 +42,7 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
+    //the toString function
     @Override
     public String toString() {
         return "Payment{" +
