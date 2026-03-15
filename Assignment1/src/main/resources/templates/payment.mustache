@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+    <!-- Semantic UI (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>paymentID</th>
+        <th>paymentMethod</th>
+        <th>paymentAmount</th>
+        <th>paymentStatus</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#paymentList}}
+        <tr>
+            <td>{{paymentID}}</td>
+            <td>{{paymentMethod}}</td>
+            <td>{{paymentAmount}}</td>
+            <td>{{paymentStatus}}</td>
+
+
+    {{/paymentList}}
+    </tbody>
+</table>
+</body>
+</html>
