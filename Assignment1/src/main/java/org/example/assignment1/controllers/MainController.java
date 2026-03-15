@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Controller //a class that receives requests and returns the page
 public class MainController {
     private MainService mainService;
 
