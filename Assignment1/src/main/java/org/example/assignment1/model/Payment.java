@@ -1,7 +1,5 @@
 package org.example.assignment1.model;
 
-import org.springframework.stereotype.Component;
-
 //created a bean for our payment class which will be used to make the user have a simple payment experience
 
 public class Payment {

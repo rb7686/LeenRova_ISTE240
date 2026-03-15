@@ -102,7 +102,7 @@ public class MainController {
     // POST handler to save payment data
     @PostMapping("/payment/add")
     public String savePayment(@RequestParam int paymentID, @RequestParam String paymentMethod, @RequestParam double paymentAmount, @RequestParam String paymentStatus, Model data){
-        Payment newPayment = new Payment(paymentID, paymentAmount,paymentMethod, paymentStatus);
+        Payment newPayment = new Payment(paymentID, paymentMethod,paymentAmount, paymentStatus);
         this.mainService.savePayment((newPayment));
         data.addAttribute("entityName", "payment");
         return "redirect:/add/success/{entityName}";
