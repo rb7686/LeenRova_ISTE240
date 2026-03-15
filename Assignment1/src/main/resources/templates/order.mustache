@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <!-- Semantic UI (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>orderID</th>
+        <th>Number of Items</th>
+        <th>status</th>
+        <th>Date</th>
+        <th>User</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#orderList}}
+        <tr>
+            <td>{{orderID}}</td>
+            <td>{{numberOfItems}}</td>
+            <td>{{status}}</td>
+            <td>{{data}}</td>
+            <td>{{user}}</td>
+        </tr>
+    {{/orderList}}
+    </tbody>
+</table>
+</body>
+</html>

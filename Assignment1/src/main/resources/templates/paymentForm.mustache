@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Form</title>
+    <!-- Semantic UI (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+
+<form method="post" action="/payment" class="ui form">
+    <div class="field">
+        <label>  Payment ID </label>
+        <input type="number" name="PaymentID" placeholder="ID">
+    </div>
+    <div class="field">
+        <label> payment Method </label>
+        <input type="text" name="paymentMethod" placeholder="payment Method ">
+    </div>
+    <div class="field">
+        <label>Payment Amount</label>
+        <input type="number" name="paymentAmount" placeholder="Payment Amount">
+    </div>
+    <div class="field">
+        <label>payment Status</label>
+        <input type="text" name="paymentStatus" placeholder="payment Status">
+    </div>
+
+    <button class="ui button" type="submit"> Submit </button>
+</form>
+</body>
+</html>
