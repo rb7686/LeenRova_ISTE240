@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipping Form</title>
+    <!-- Semantic UI (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+
+<form method="post" action="/shipping/add" class="ui form">
+    <div class="field">
+        <label>  Shipping ID </label>
+        <input type="number" name="ShippingID" placeholder=" Shipping ID">
+    </div>
+    <div class="field">
+        <label> Home Number </label>
+        <input type="number" name="homeNumber" placeholder="Home Number ">
+    </div>
+    <div class="field">
+        <label>Street Name</label>
+        <input type="text" name="streetName" placeholder="Street Name">
+    </div>
+    <div class="field">
+        <label> City Name </label>
+        <input type="text" name="city" placeholder="City Name">
+    </div>
+
+    <button class="ui button" type="submit"> Submit </button>
+</form>
+</body>
+</html>
