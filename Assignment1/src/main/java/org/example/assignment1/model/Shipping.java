@@ -3,7 +3,7 @@ package org.example.assignment1.model;
 import org.springframework.stereotype.Component;
 
 // created a shipping bean that stores shipping information
-@Component
+
 public class Shipping {
 
     // attributes for shipping such as ID, and address details
