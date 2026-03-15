@@ -3,7 +3,7 @@ package org.example.assignment1.model;
 import org.springframework.stereotype.Component;
 
 //created a bean for our Order class which will be used to store order details
-@Component
+
 public class Order {
 
     // attributes relevant to the Order class such as ID, number of items, order status, and order date
@@ -11,6 +11,16 @@ public class Order {
     private int numberOfItems;
     private String status;
     private String date;
+    private User user; // Linking Order to User
+
+    // Constructor
+    public Order(int orderID, int numberOfItems, String status, String date, User user) {
+        this.orderID = orderID;
+        this.numberOfItems = numberOfItems;
+        this.status = status;
+        this.date = date;
+        this.user = user;
+    }
 
     // getters and setters for all attributes
     public int getOrderID() {
@@ -39,6 +49,14 @@ public class Order {
     }
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // toString function

@@ -2,8 +2,11 @@ package org.example.assignment1.model;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // created a User bean that stores user related information
-@Component
+
 public class User {
 
     // attributes for each user such as ID, first and last name, and contact details
@@ -12,6 +15,17 @@ public class User {
     private String lastName;
     private String email;
     private int phoneNumber;
+    private List<Order> orders; //linking to User
+
+    // Constructor
+    public User(int id, String firstName, String lastName, String email, int phoneNumber, List<Order> orders) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.orders = orders;
+    }
 
     // getters and setters
     public int getID() {

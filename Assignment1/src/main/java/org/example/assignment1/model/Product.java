@@ -3,7 +3,7 @@ package org.example.assignment1.model;
 import org.springframework.stereotype.Component;
 
 //created a bean for our product class
-@Component
+
 public class Product {
 
     //created our attributes that are related to our product class
