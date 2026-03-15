@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <!-- Semantic UI (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>productName</th>
+        <th>color</th>
+        <th>size</th>
+        <th>price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#productList}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{productName}}</td>
+            <td>{{color}}</td>
+            <td>{{size}}</td>
+            <td>{{price}}</td>
+
+
+    {{/productList}}
+    </tbody>
+</table>
+</body>
+</html>
