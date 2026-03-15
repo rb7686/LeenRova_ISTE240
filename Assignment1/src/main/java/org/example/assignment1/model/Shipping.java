@@ -12,6 +12,15 @@ public class Shipping {
     private String streetName;
     private String city;
 
+    // Constructor
+
+    public Shipping(int shippingID, String homeNumber, String streetName, String city) {
+        this.shippingID = shippingID;
+        this.homeNumber = homeNumber;
+        this.streetName = streetName;
+        this.city = city;
+    }
+
     // getters and setters
     public int getShippingID() {
         return shippingID;
