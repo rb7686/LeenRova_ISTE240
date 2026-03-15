@@ -13,6 +13,15 @@ public class Payment {
     private double paymentAmount;
     private String paymentStatus;
 
+    // Constructor
+
+    public Payment(int paymentID, String paymentMethod, double paymentAmount, String paymentStatus) {
+        this.paymentID = paymentID;
+        this.paymentMethod = paymentMethod;
+        this.paymentAmount = paymentAmount;
+        this.paymentStatus = paymentStatus;
+    }
+
     //made the getters and setters
     public int getPaymentID() {
         return paymentID;

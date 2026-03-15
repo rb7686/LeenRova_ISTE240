@@ -14,6 +14,16 @@ public class Product {
     private String size;
     private int price;
 
+    //Constructor
+
+    public Product(int id, String productName, String color, String size, int price) {
+        this.id = id;
+        this.productName = productName;
+        this.color = color;
+        this.size = size;
+        this.price = price;
+    }
+
     //made the getters and setters
     public int getId() {
         return id;
