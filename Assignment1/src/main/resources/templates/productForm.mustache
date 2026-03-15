@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Form</title>
+    <!-- Semantic UI (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+
+<form method="post" action="/product" class="ui form">
+    <div class="field">
+        <label>  Product ID </label>
+        <input type="number" name="id" placeholder="Product ID">
+    </div>
+    <div class="Product Name">
+        <label> payment Method </label>
+        <input type="text" name="productName" placeholder="Product Name ">
+    </div>
+    <div class="field">
+        <label>Product color </label>
+        <input type="number" name="color" placeholder=" Product color">
+    </div>
+    <div class="field">
+        <label>Product  Size</label>
+        <input type="text" name="size" placeholder="Product Size">
+    </div>
+    <div class="field">
+        <label>Product  Price</label>
+        <input type="text" name="price" placeholder="Product Price">
+    </div>
+
+    <button class="ui button" type="submit"> Submit </button>
+</form>
+</body>
+</html>
