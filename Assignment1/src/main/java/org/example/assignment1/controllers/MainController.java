@@ -21,7 +21,7 @@ public class MainController {
     // Landing page handler
     @RequestMapping("/")
     public String getIndex(){
-        return "index";
+        return "index.html";
     }
 
     // GET handler for list of user objects
@@ -42,7 +42,7 @@ public class MainController {
         User newUser = new User(id, firstName, lastName, email, phoneNumber, new ArrayList<Order>());
         this.mainService.saveUser((newUser));
         data.addAttribute("entityName", "user");
-        return "redirect:/add/success/{entityName}";
+        return "redirect:/add/success/user";
     }
 
     // GET handler for list of order objects
@@ -63,7 +63,7 @@ public class MainController {
         Order newOrder = new Order(id, numberOfItems, status, date, user);
         this.mainService.saveOrder((newOrder));
         data.addAttribute("entityName", "order");
-        return "redirect:/add/success/{entityName}";
+        return "redirect:/add/success/order";
     }
 
     // GET handler for list of shipping objects
@@ -84,7 +84,7 @@ public class MainController {
         Shipping newShipping = new Shipping(shippingID, homeNumber, streetName, city);
         this.mainService.saveShipping((newShipping));
         data.addAttribute("entityName", "shipping");
-        return "redirect:/add/success/{entityName}";
+        return "redirect:/add/success/shipping";
     }
 
     // GET handler for list of payment objects
@@ -105,7 +105,7 @@ public class MainController {
         Payment newPayment = new Payment(paymentID, paymentMethod,paymentAmount, paymentStatus);
         this.mainService.savePayment((newPayment));
         data.addAttribute("entityName", "payment");
-        return "redirect:/add/success/{entityName}";
+        return "redirect:/add/success/payment";
     }
 
     // GET handler for list of product objects
@@ -126,7 +126,7 @@ public class MainController {
         Product newProduct = new Product(id, productName, color, size, price);
         this.mainService.saveProduct((newProduct));
         data.addAttribute("entityName", "product");
-        return "redirect:/add/success/{entityName}";
+        return "redirect:/add/success/product";
     }
 
     // Success page handler
