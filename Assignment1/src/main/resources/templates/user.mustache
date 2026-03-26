@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
 </head>
 <body>
-<table>
+<table class = "ui celled table">
     <thead>
     <tr>
         <th>id</th>
@@ -23,11 +23,11 @@
     <tbody>
     {{#userList}}
         <tr>
-            <td>{{id}}</td>
-            <td>{{firstName}}</td>
-            <td>{{lastName}}</td>
-            <td>{{phoneNumber}}</td>
-            <td> {{#orders}} Order {{orderID}} ({{status}})<br> {{/orders}}</td>
+            <td data-label="ID">{{ID}}</td>
+            <td data-label="firstName">{{firstName}}</td>
+            <td data-label="lastName">{{lastName}}</td>
+            <td data-label="phoneNumber">{{phoneNumber}}</td>
+            <td data-label="Orders"> {{#orders}} Order {{orderID}} ({{status}})<br> {{/orders}}</td>
         </tr>
     {{/userList}}
     </tbody>
