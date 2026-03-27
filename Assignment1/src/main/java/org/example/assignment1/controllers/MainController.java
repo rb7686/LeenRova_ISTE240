@@ -47,7 +47,7 @@ public class MainController {
 
     // GET handler for list of order objects
     @RequestMapping("/order")
-    public String getorderList(Model data){
+    public String getOrderList(Model data){
         List<Order> orderList = this.mainService.findAllOrder();
         data.addAttribute("orderList", orderList);
         return "order";
