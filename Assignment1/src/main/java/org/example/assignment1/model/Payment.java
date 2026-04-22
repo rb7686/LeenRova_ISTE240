@@ -1,14 +1,26 @@
+// ROVA BADAVI UID:761002045
 package org.example.assignment1.model;
 
-//created a bean for our payment class which will be used to make the user have a simple payment experience
+import jakarta.persistence.*;
 
+//created a bean for our payment class which will be used to make the user have a simple payment experience
+@Entity
+@Table(name = "PAYMENT")
 public class Payment {
 
     //created our attributes that are related to our payment class with appropriate data types
     // the payment class will have attributes that are needed
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paymentID;
+
+    @Column
     private String paymentMethod;
+
+    @Column
     private double paymentAmount;
+
+    @Column
     private String paymentStatus;
 
     // Constructor
@@ -19,6 +31,8 @@ public class Payment {
         this.paymentAmount = paymentAmount;
         this.paymentStatus = paymentStatus;
     }
+
+    public Payment(){}
 
     //made the getters and setters
     public int getPaymentID() {
