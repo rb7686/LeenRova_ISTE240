@@ -1,5 +1,5 @@
 <h1 align="center">Welcome to Zero-Eight, by Leen and Rova!</h1>
-<h3 align="center">UIDs: Leen: 400003496, Rova: 761002045 </h3>
+<h3 align="center">UIDs: Leen: 400003496, Rova: 761002045 (Merge Manager) </h3>
 
 <h3 align="left"></h3>
 <p align="left">
