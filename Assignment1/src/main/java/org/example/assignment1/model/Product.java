@@ -1,17 +1,30 @@
+// ROVA BADAVI UID:761002045
 package org.example.assignment1.model;
 
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 //created a bean for our product class
-
+@Entity
+@Table(name = "PRODUCT")
 public class Product {
 
     //created our attributes that are related to our product class
     // the products we have will have attributes that are suitable for them
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column
     private String productName;
+
+    @Column
     private String color;
+
+    @Column
     private String size;
+
+    @Column
     private int price;
 
     //Constructor
@@ -23,6 +36,8 @@ public class Product {
         this.size = size;
         this.price = price;
     }
+
+    public Product(){}
 
     //made the getters and setters
     public int getId() {
