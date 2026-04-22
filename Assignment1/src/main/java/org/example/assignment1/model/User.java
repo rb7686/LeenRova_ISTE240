@@ -1,20 +1,33 @@
+// Leen Salaheddin Entity UID: 400003496
+
+
 package org.example.assignment1.model;
 
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
+import jakarta.persistence.*;
 import java.util.List;
 
-// created a User bean that stores user related information
-
+@Entity
+@Table(name = "USER")
 public class User {
 
     // attributes for each user such as ID, first and last name, and contact details
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+   @Column
     private String firstName;
+
+   @Column
     private String lastName;
+
+   @Column
     private String email;
+
+   @Column
     private int phoneNumber;
+
+    @OneToMany
     private List<Order> orders; //linking to User
 
     // Constructor
@@ -27,6 +40,7 @@ public class User {
         this.orders = orders;
     }
 
+    public User() {}
     // getters and setters
     public int getID() {
         return id;

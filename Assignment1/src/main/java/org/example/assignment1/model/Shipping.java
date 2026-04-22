@@ -1,15 +1,26 @@
+// Leen Salaheddin Entity UID: 400003496
+
+
 package org.example.assignment1.model;
 
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 // created a shipping bean that stores shipping information
-
+@Entity
+@Table(name = "SHIPPING")
 public class Shipping {
 
     // attributes for shipping such as ID, and address details
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shippingID;
+
+    @Column
     private String homeNumber;
+    @Column
     private String streetName;
+    @Column
     private String city;
 
     // Constructor
@@ -21,6 +32,7 @@ public class Shipping {
         this.city = city;
     }
 
+    public Shipping(){}
     // getters and setters
     public int getShippingID() {
         return shippingID;

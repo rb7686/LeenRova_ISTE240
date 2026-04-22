@@ -1,16 +1,28 @@
 package org.example.assignment1.model;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
 //created a bean for our Order class which will be used to store order details
 
+@Entity
+@Table(name = "ORDER")
 public class Order {
 
     // attributes relevant to the Order class such as ID, number of items, order status, and order date
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderID;
+
+    @Column
     private int numberOfItems;
+
+    @Column
     private String status;
+
+    @Column
     private String date;
+
+    @ManyToOne
     private User user; // Linking Order to User
 
     // Constructor
@@ -22,6 +34,9 @@ public class Order {
         this.user = user;
     }
 
+    public  Order(){
+
+    }
     // getters and setters for all attributes
     public int getOrderID() {
         return orderID;
