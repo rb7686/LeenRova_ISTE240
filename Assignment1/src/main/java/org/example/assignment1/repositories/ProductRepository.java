@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     // Find methods
     List<Product> findAll();
-    Optional<Product> findById(int id);
+    Optional<Product> findById(Integer id);
 
     // Find method with JPQL query
     @Query("SELECT p FROM Product p WHERE p.productName = :productName")
@@ -23,8 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //Update method
     @Modifying
     @Query("UPDATE Product p SET p.price = :price WHERE p.id = :id")
-    int updatePriceById(@Param("id") int id, @Param("price") int price);
+    int updatePriceById(@Param("id") Integer id, @Param("price") int price);
 
     // Delete method
-    void deleteById(int id);
+    void deleteById(Integer id);
 }

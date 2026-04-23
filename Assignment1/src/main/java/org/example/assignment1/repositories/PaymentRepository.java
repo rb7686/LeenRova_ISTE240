@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface PaymentRepository extends JpaRepository<Payment, int> {
+public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     // Find methods
     List<Payment> findAll();
     Optional<Payment> findById(Integer id);
