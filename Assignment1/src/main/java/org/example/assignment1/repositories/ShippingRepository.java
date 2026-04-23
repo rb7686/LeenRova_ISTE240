@@ -15,16 +15,16 @@ public interface ShippingRepository extends JpaRepository<Shipping, Integer> {
 
     // Find methods
     List<Shipping> findAll();
-    Optional<Shipping> findById(Integer shippingID);
+    Optional<Shipping> findById(Integer id);
 
     @Query("SELECT s FROM Shipping s WHERE s.city = :city")
-    List<Shipping> findByShippingMethod(@Param("city") String city);
+    List<Shipping> findByCity(@Param("city") String city);
 
     //Update method
     @Modifying
-    @Query("UPDATE Shipping s SET s.streetName = :streetName WHERE s.streetName = :streetName")
-    int updatestreetNameById(@Param("Shipping ID") Integer ShippingID, @Param("streetName") String streetName);
+    @Query("UPDATE Shipping s SET s.streetName = :streetName WHERE s.shippingID = :shippingID")
+    int updateStreetNameById(@Param("id") Integer id, @Param("streetName") String streetName);
 
     // Delete method
-    void deleteByid(Integer shippingID);
+    void deleteById(Integer id);
 }

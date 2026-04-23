@@ -15,7 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     // Find methods
     List<Order> findAll();
-    Optional<Order> findById(Integer orderID);
+    Optional<Order> findById(Integer id);
 
     @Query("SELECT o FROM Order o WHERE o.status = :status")
     List<Order> findByOrderMethod(@Param("status") String status);
@@ -23,8 +23,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     //Update method
     @Modifying
     @Query("UPDATE Order o SET o.numberOfItems = :numberOfItems WHERE o.numberOfItems = :numberOfItems")
-    int updatenumberOfItemsById(@Param("ID") Integer OrderID, @Param("Number of Items") int numberOfItems);
+    int updatenumberOfItemsById(@Param("ID") Integer id, @Param("Number of Items") int numberOfItems);
 
     // Delete method
-    void deleteByid(Integer OrderID);
+    void deleteById(Integer id);
 }
