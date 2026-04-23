@@ -28,5 +28,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     int updatephoneNumberById(@Param("User ID") Integer id, @Param("phoneNumber") int phoneNumber);
 
     // Delete method
-    void deleteByid(Integer id);
+    void deleteById(Integer id);
 }
