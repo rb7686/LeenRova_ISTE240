@@ -4,7 +4,6 @@ package org.example.assignment1.services;
 
 import jakarta.transaction.Transactional;
 import org.example.assignment1.model.Shipping;
-import org.example.assignment1.repositories.ProductRepository;
 import org.example.assignment1.repositories.ShippingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,6 @@ public class ShippingService {
 
     @Autowired
     private ShippingRepository shippingRepository;
-    @Autowired
-    private ProductRepository productRepository;
 
     public Shipping getShippingById(Integer id) {
         Optional<Shipping> shipping = shippingRepository.findById(id);
@@ -26,9 +23,8 @@ public class ShippingService {
     }
 
     public List<Shipping> getShippingByCity(String city){
-        return shippingRepository.findByCity(city);
+        return shippingRepository.findShippingByCity(city);
     }
-
     public List<Shipping> getAllShippings(){
         return shippingRepository.findAll();
     }
@@ -49,8 +45,8 @@ public class ShippingService {
             existingShipping.setStreetName(updatedShipping.getStreetName());
 
             return shippingRepository.save(existingShipping);
-            return null;
         }
+        return null;
     }
 
     @Transactional

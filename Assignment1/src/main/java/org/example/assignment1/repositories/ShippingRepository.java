@@ -18,7 +18,7 @@ public interface ShippingRepository extends JpaRepository<Shipping, Integer> {
     Optional<Shipping> findById(Integer id);
 
     @Query("SELECT s FROM Shipping s WHERE s.city = :city")
-    List<Shipping> findByCity(@Param("city") String city);
+    List<Shipping> FindShippingByCity(@Param("city") String city);
 
     //Update method
     @Modifying
@@ -27,4 +27,6 @@ public interface ShippingRepository extends JpaRepository<Shipping, Integer> {
 
     // Delete method
     void deleteById(Integer id);
+
+    List<Shipping> findShippingByCity(String city);
 }

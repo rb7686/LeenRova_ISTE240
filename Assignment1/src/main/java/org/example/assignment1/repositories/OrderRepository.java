@@ -1,6 +1,6 @@
 package org.example.assignment1.repositories;
-// Leen Salaheddin Repository UID: 400003496
 
+// Leen Salaheddin Repository UID: 400003496package org.example.assignment1.repositories;
 
 import org.example.assignment1.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,4 +27,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     // Delete method
     void deleteById(Integer id);
+
+    List<Order> findOrderByStatus(String status);
 }

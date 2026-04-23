@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findById(Integer id);
 
     @Query("SELECT u FROM User u WHERE u.firstName = :firstName")
-    List<User> findByfirstNameMethod(@Param("First Name") String firstName);
+    List<User> FindByFirstName(@Param("First Name") String firstName);
 
     //Update method
     @Modifying

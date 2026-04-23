@@ -16,14 +16,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     public User getUserById(Integer id){
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
-
     }
 
     public List<User> getUserByFirstName(String firstName){
+        return userRepository.FindByFirstName(firstName);
+    }
+
+
+    public List<User> getAllUsers(){
         return userRepository.findAll();
     }
 

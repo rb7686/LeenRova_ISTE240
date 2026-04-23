@@ -22,8 +22,12 @@ public class OrderService {
         return order.orElse(null);
     }
 
-    public List<Order> getAllOrder(){
+    public List<Order> getAllOrders(){
         return orderRepository.findAll();
+    }
+
+    public List<Order> getOrderByStatus(String status){
+        return orderRepository.findOrderByStatus(status);
     }
 
     @Transactional
