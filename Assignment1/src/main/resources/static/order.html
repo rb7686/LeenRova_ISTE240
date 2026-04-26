@@ -1,0 +1,162 @@
+<!-- Leen Salaheddin Service UID: 400003496 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui container" style="margin-top: 30px;">
+
+  <h2 class="ui header">Order Form</h2>
+
+  <div id="message"></div>
+
+  <div class="ui form">
+    <input type="hidden" id="orderID">
+    <div class="field">
+      <label>Number of Items</label>
+      <input type="number" id="numberOfItems" placeholder="Number of Items">
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <input type="text" id="status" placeholder="Status">
+    </div>
+
+    <button class="ui primary button" id="submitOrder">Submit</button>
+    <button class="ui button" id="updateOrder">Update</button>
+    <a href="/index.html" class="ui button" style="display: inline-block;">Back to Home</a>  </div>
+
+  <br>
+
+  <h2 class="ui header">Order List</h2>
+
+  <div class="ui fluid action input" style="margin-bottom: 20px;">
+    <input type="text" id="statusSearch" placeholder="Search by status...">
+    <button class="ui button" id="bSearch">Search</button>
+    <button class="ui teal button" id="showAllBtn" style="margin-left: 10px;">Show All</button>
+  </div>
+
+  <table class="ui celled table" id="orderTable">
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Number of Items</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<script>
+  function showAll() {
+    $.get("/api/order/all", function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+        rows += `<tr>`;
+        rows += `<td>${line.orderID}</td>`;
+        rows += `<td>${line.numberOfItems}</td>`;
+        rows += `<td>${line.status}</td>`;
+        rows += `<td>
+          <button class="ui red button" onclick="deleteOrder(${line.orderID})">Delete</button>
+          <button class="ui blue button" onclick="editOrder(${line.orderID}, '${line.numberOfItems}', '${line.status}')">Edit</button>
+        </td>`;
+        rows += `</tr>`;
+      }
+      $("#tableBody").html(rows);
+    });
+  }
+
+  showAll();
+
+  $("#showAllBtn").click(function() {
+    $("#statusSearch").val("");
+    showAll();
+  });
+
+  $("#bSearch").click(function() {
+    let statusVal = $("#statusSearch").val();
+    $.get("/api/order/search?status=" + statusVal, function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+        rows += `<tr>`;
+        rows += `<td>${line.orderID}</td>`;
+        rows += `<td>${line.numberOfItems}</td>`;
+        rows += `<td>${line.status}</td>`;
+        rows += `<td>
+          <button class="ui red button" onclick="deleteOrder(${line.orderID})">Delete</button>
+          <button class="ui blue button" onclick="editOrder(${line.orderID}, '${line.numberOfItems}', '${line.status}')">Edit</button>
+        </td>`;
+        rows += `</tr>`;
+      }
+      $("#tableBody").html(rows);
+    });
+  });
+
+  function deleteOrder(id) {
+    $.ajax({
+      url: "/api/order/" + id,
+      type: "delete",
+      success: function() {
+        $("#message").html('<div class="ui success message">Deleted successfully!</div>');
+        showAll();
+      }
+    });
+  }
+
+  function editOrder(id, numberOfItems, status) {
+    $("#orderID").val(id);
+    $("#numberOfItems").val(numberOfItems);
+    $("#status").val(status);
+  }
+
+  $("#submitOrder").click(function() {
+    $.ajax({
+      url: "/api/order",
+      type: "post",
+      contentType: "application/json",
+      data: JSON.stringify({
+        numberOfItems: $("#numberOfItems").val(),
+        status: $("#status").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Order added successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+
+  $("#updateOrder").click(function() {
+    let id = $("#orderID").val();
+    $.ajax({
+      url: "/api/order/" + id,
+      type: "put",
+      contentType: "application/json",
+      data: JSON.stringify({
+        orderID: id,
+        numberOfItems: $("#numberOfItems").val(),
+        status: $("#status").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Updated successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+</script>
+</body>
+</html>

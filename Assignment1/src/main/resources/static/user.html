@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui container" style="margin-top: 30px;">
+
+  <h2 class="ui header">User Form</h2>
+
+  <div id="message"></div>
+
+  <div class="ui form">
+    <div class="field">
+      <label>User ID</label>
+      <input type="hidden" id="id" placeholder="User ID">
+    </div>
+    <div class="field">
+      <label>First Name</label>
+      <input type="text" id="firstName" placeholder="First Name">
+    </div>
+    <div class="field">
+      <label>Last Name</label>
+      <input type="text" id="lastName" placeholder="Last Name">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="text" id="email" placeholder="Email">
+    </div>
+    <div class="field">
+      <label>Phone Number</label>
+      <input type="text" id="phoneNumber" placeholder="Phone Number">
+    </div>
+
+    <button class="ui primary button" id="submitUser">Submit</button>
+    <button class="ui button" id="updateUser">Update</button>
+  </div>
+
+  <br>
+
+  <h2 class="ui header">User List</h2>
+
+  <div class="ui fluid action input" style="margin-bottom: 20px;">
+    <input type="text" id="firstNameSearch" placeholder="Search by first name...">
+    <button class="ui button" id="bSearch">Search</button>
+    <button class="ui teal button" id="showAll" style="margin-left: 10px;">Show All</button>
+    <a href="/index.html" class="ui button" style="display: inline-block;">Back to Home</a>
+  </div>
+
+  <table class="ui celled table" id="userTable">
+    <thead>
+    <tr>
+      <th>User ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<script>
+  function showAll() {
+    $.get("/api/user/all", function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+        rows += `<tr>`;
+        rows += `<td>${line.id}</td>`;
+        rows += `<td>${line.firstName}</td>`;
+        rows += `<td>${line.lastName}</td>`;
+        rows += `<td>${line.email}</td>`;
+        rows += `<td>${line.phoneNumber}</td>`;
+        rows += `<td>
+          <button class="ui red button" onclick="deleteUser(${line.id})">Delete</button>
+          <button class="ui blue button" onclick="editUser(${line.id}, '${line.firstName}', '${line.lastName}', '${line.email}', '${line.phoneNumber}')">Edit</button>
+        </td>`;
+        rows += `</tr>`;
+      }
+      $("#tableBody").html(rows);
+    });
+  }
+
+  showAll();
+
+  $("#showAll").click(function() {
+    $("#firstNameSearch").val("");
+    showAll();
+  });
+
+  $("#bSearch").click(function() {
+    let firstNameVal = $("#firstNameSearch").val();
+    $.get("/api/user/search?firstName=" + firstNameVal, function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+        rows += `<tr>`;
+        rows += `<td>${line.id}</td>`;
+        rows += `<td>${line.firstName}</td>`;
+        rows += `<td>${line.lastName}</td>`;
+        rows += `<td>${line.email}</td>`;
+        rows += `<td>${line.phoneNumber}</td>`;
+        rows += `<td>
+          <button class="ui red button" onclick="deleteUser(${line.id})">Delete</button>
+          <button class="ui blue button" onclick="editUser(${line.id}, '${line.firstName}', '${line.lastName}', '${line.email}', '${line.phoneNumber}')">Edit</button>
+        </td>`;
+        rows += `</tr>`;
+      }
+
+      $("#tableBody").html(rows);
+    });
+  });
+
+  function deleteUser(id) {
+    $.ajax({
+      url: "/api/user/" + id,
+      type: "delete",
+      success: function() {
+        $("#message").html('<div class="ui success message">Deleted successfully!</div>');
+        showAll();
+      }
+    });
+  }
+
+  function editUser(id, firstName, lastName, email, phoneNumber) {
+    $("#id").val(id);
+    $("#firstName").val(firstName);
+    $("#lastName").val(lastName);
+    $("#email").val(email);
+    $("#phoneNumber").val(phoneNumber);
+  }
+
+  $("#submitUser").click(function() {
+    $.ajax({
+      url: "/api/user",
+      type: "post",
+      contentType: "application/json",
+      data: JSON.stringify({
+        firstName: $("#firstName").val(),
+        lastName: $("#lastName").val(),
+        email: $("#email").val(),
+        phoneNumber: $("#phoneNumber").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">User added successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+
+  $("#updateUser").click(function() {
+    let id = $("#id").val();
+    $.ajax({
+      url: "/api/user/" + id,
+      type: "put",
+      contentType: "application/json",
+      data: JSON.stringify({
+        id: id,
+        firstName: $("#firstName").val(),
+        lastName: $("#lastName").val(),
+        email: $("#email").val(),
+        phoneNumber: $("#phoneNumber").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Updated successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+</script>
+</body>
+</html>
