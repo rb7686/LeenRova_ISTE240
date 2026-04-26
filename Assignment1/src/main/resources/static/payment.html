@@ -1,0 +1,193 @@
+<!-- ROVA BADAVI UID:761002045 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui container" style="margin-top: 30px;">
+
+  <h2 class="ui header">Payment Form</h2>
+
+  <!-- Success/error message -->
+  <div id="message"></div>
+
+  <!-- form -->
+  <div class="ui form">
+    <div class="field">
+      <label>Payment ID</label>
+      <input type="hidden" id="paymentID" placeholder="Payment ID">
+    </div>
+    <div class="field">
+      <label>Payment Method</label>
+      <input type="text" id="paymentMethod" placeholder="Payment Method">
+    </div>
+    <div class="field">
+      <label>Payment Amount</label>
+      <input type="text" id="paymentAmount" placeholder="Payment Amount">
+    </div>
+    <div class="field">
+      <label>Payment Status</label>
+      <input type="text" id="paymentStatus" placeholder="Payment Status">
+    </div>
+
+    <button class="ui primary button" id="submitPayment">Submit</button>
+    <button class="ui button" id="updatePayment">Update</button>
+  </div>
+
+  <br>
+
+  <h2 class="ui header">Payment List</h2>
+
+  <!-- search bar -->
+  <div class="ui fluid action input" style="margin-bottom: 20px;">
+    <input type="text" id="paymentStatusSearch" placeholder="Search by payment status...">
+    <button class="ui button" id="bSearch">Search</button>
+    <button class="ui teal button" id="showAll" style="margin-left: 10px;">Show All</button>
+  </div>
+
+  <!-- table -->
+  <table class="ui celled table" id="paymentTable">
+    <thead>
+    <tr>
+      <th>Payment ID</th>
+      <th>Payment Method</th>
+      <th>Payment Amount</th>
+      <th>Payment Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    <!-- Populated by jQuery -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // show all payment records on page load
+  // show all payment records on page load
+  function showAll() {
+    $.get("/api/payment/all", function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+
+        rows += `<tr>`;
+        rows += `<td>${line.paymentID}</td>`;
+        rows += `<td>${line.paymentMethod}</td>`;
+        rows += `<td>${line.paymentAmount}</td>`;
+        rows += `<td>${line.paymentStatus}</td>`;
+        rows += `<td>
+                        <button class="ui red button" onclick="deletePayment(${line.paymentID})">Delete</button>
+                        <button class="ui blue button" onclick="editPayment(${line.paymentID}, '${line.paymentMethod}', '${line.paymentAmount}', '${line.paymentStatus}')">Edit</button>
+                    </td>`;
+        rows += `</tr>`;
+      }
+      $("#tableBody").html(rows);
+    });
+  }
+
+  showAll();
+
+  // Show all button
+  $("#showAll").click(function() {
+    $("#paymentStatusSearch").val("");
+    showAll();
+  });
+
+  // Search by payment status
+  $("#bSearch").click(function() {
+    let paymentMethodVal = $("#paymentMethod").val();
+
+    $.get("/api/payment/search?paymentMethod=" + paymentMethodVal, function(data) {
+      let rows = "";
+
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+
+        rows += `<tr>`;
+        rows += `<td>${line.paymentID}</td>`;
+        rows += `<td>${line.paymentMethod}</td>`;
+        rows += `<td>${line.paymentAmount}</td>`;
+        rows += `<td>${line.paymentStatus}</td>`;
+        rows += `<td>
+                        <button class="ui red button" onclick="deletePayment(${line.paymentID})">Delete</button>
+                        <button class="ui blue button" onclick="editPayment(${line.paymentID}, '${line.paymentMethod}', '${line.paymentAmount}', '${line.paymentStatus}')">Edit</button>
+                     </td>`;
+        rows += `</tr>`;
+      }
+
+      $("#tableBody").html(rows);
+    });
+  });
+
+  // Delete
+  function deletePayment(id) {
+    $.ajax({
+      url: "/api/payment/" + id,
+      type: "delete",
+      success: function() {
+        $("#message").html('<div class="ui success message">Deleted successfully!</div>');
+        showAll();
+      }
+    });
+  }
+
+  // Edit — fills the form
+  function editPayment(id, paymentMethod, paymentAmount, paymentStatus) {
+    $("#paymentID").val(id);
+    $("#paymentMethod").val(paymentMethod);
+    $("#paymentAmount").val(paymentAmount);
+    $("#paymentStatus").val(paymentStatus);
+  }
+
+  // Submit (POST)
+  $("#submitPayment").click(function() {
+    $.ajax({
+      url: "/api/payment",
+      type: "post",
+      contentType: "application/json",
+      data: JSON.stringify({
+        paymentMethod: $("#paymentMethod").val(),
+        paymentAmount: $("#paymentAmount").val(),
+        paymentStatus: $("#paymentStatus").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Payment added successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+
+  // Update (PUT)
+  $("#updatePayment").click(function() {
+    let id = $("#paymentID").val();
+    $.ajax({
+      url: "/api/payment/" + id,
+      type: "put",
+      contentType: "application/json",
+      data: JSON.stringify({
+        paymentID: id,
+        paymentMethod: $("#paymentMethod").val(),
+        paymentAmount: $("#paymentAmount").val(),
+        paymentStatus: $("#paymentStatus").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Updated successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+</script>
+</body>
+</html>

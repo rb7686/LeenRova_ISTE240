@@ -1,0 +1,200 @@
+<!-- ROVA BADAVI UID:761002045 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui container" style="margin-top: 30px;">
+
+  <h2 class="ui header">Product Form</h2>
+
+  <!-- Success/error message -->
+  <div id="message"></div>
+
+  <!-- form -->
+  <div class="ui form">
+    <div class="field">
+      <label>Product ID</label>
+      <input type="hidden" id="id" placeholder="Product ID">
+    </div>
+    <div class="field">
+      <label>Product Name</label>
+      <input type="text" id="productName" placeholder="Product Name">
+    </div>
+    <div class="field">
+      <label>Color</label>
+      <input type="text" id="color" placeholder="Color">
+    </div>
+    <div class="field">
+      <label>Size</label>
+      <input type="text" id="size" placeholder="Size">
+    </div>
+    <div class="field">
+      <label>Price</label>
+      <input type="text" id="price" placeholder="Price">
+    </div>
+
+    <button class="ui primary button" id="submitProduct">Submit</button>
+    <button class="ui button" id="updateProduct">Update</button>
+  </div>
+
+  <br>
+
+  <h2 class="ui header">Product List</h2>
+
+  <!-- search bar -->
+  <div class="ui fluid action input" style="margin-bottom: 20px;">
+    <input type="text" id="productNameSearch" placeholder="Search by product name...">
+    <button class="ui button" id="bSearch">Search</button>
+    <button class="ui teal button" id="showAll" style="margin-left: 10px;">Show All</button>
+  </div>
+
+  <!-- table -->
+  <table class="ui celled table" id="productTable">
+    <thead>
+    <tr>
+      <th>Product ID</th>
+      <th>Product Name</th>
+      <th>Color</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<script>
+  // show all product records on page load
+  function showAll() {
+    $.get("/api/product/all", function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+
+        rows += `<tr>`;
+        rows += `<td>${line.id}</td>`;
+        rows += `<td>${line.productName}</td>`;
+        rows += `<td>${line.color}</td>`;
+        rows += `<td>${line.size}</td>`;
+        rows += `<td>${line.price}</td>`;
+        rows += `<td>
+                        <button class="ui red button" onclick="deleteProduct(${line.id})">Delete</button>
+                        <button class="ui blue button" onclick="editProduct(${line.id}, '${line.productName}', '${line.color}', '${line.size}', '${line.price}')">Edit</button>
+                     </td>`;
+        rows += `</tr>`;
+      }
+      $("#tableBody").html(rows);
+    });
+  }
+
+  showAll();
+
+  // Show all button
+  $("#showAll").click(function() {
+    $("#productNameSearch").val("");
+    showAll();
+  });
+
+  // Search by product name
+  $("#bSearch").click(function() {
+    let productNameVal = $("#productNameSearch").val();
+
+    $.get("/api/product/search?productName=" + productNameVal, function(data) {
+      let rows = "";
+
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+
+        rows += `<tr>`;
+        rows += `<td>${line.id}</td>`;
+        rows += `<td>${line.productName}</td>`;
+        rows += `<td>${line.color}</td>`;
+        rows += `<td>${line.size}</td>`;
+        rows += `<td>${line.price}</td>`;
+        rows += `<td>
+                        <button class="ui red button" onclick="deleteProduct(${line.id})">Delete</button>
+                        <button class="ui blue button" onclick="editProduct(${line.id}, '${line.productName}', '${line.color}', '${line.size}', '${line.price}')">Edit</button>
+                     </td>`;
+        rows += `</tr>`;
+      }
+
+      $("#tableBody").html(rows);
+    });
+  });
+
+  // Delete
+  function deleteProduct(id) {
+    $.ajax({
+      url: "/api/product/" + id,
+      type: "delete",
+      success: function() {
+        $("#message").html('<div class="ui success message">Deleted successfully!</div>');
+        showAll();
+      }
+    });
+  }
+
+  // Edit — fills the form
+  function editProduct(id, productName, color, size, price) {
+    $("#id").val(id);
+    $("#productName").val(productName);
+    $("#color").val(color);
+    $("#size").val(size);
+    $("#price").val(price);
+  }
+
+  // Submit (POST)
+  $("#submitProduct").click(function() {
+    $.ajax({
+      url: "/api/product",
+      type: "post",
+      contentType: "application/json",
+      data: JSON.stringify({
+        productName: $("#productName").val(),
+        color: $("#color").val(),
+        size: $("#size").val(),
+        price: $("#price").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Product added successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+
+  // Update (PUT)
+  $("#updateProduct").click(function() {
+    let id = $("#id").val();
+    $.ajax({
+      url: "/api/product/" + id,
+      type: "put",
+      contentType: "application/json",
+      data: JSON.stringify({
+        id: id,
+        productName: $("#productName").val(),
+        color: $("#color").val(),
+        size: $("#size").val(),
+        price: $("#price").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Updated successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+</script>
+</body>
+</html>

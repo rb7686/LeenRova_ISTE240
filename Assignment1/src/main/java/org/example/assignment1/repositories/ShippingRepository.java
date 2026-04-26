@@ -23,7 +23,7 @@ public interface ShippingRepository extends JpaRepository<Shipping, Integer> {
     //Update method
     @Modifying
     @Query("UPDATE Shipping s SET s.streetName = :streetName WHERE s.shippingID = :shippingID")
-    int updateStreetNameById(@Param("id") Integer id, @Param("streetName") String streetName);
+    int updateStreetNameById(@Param("shippingID") Integer id, @Param("streetName") String streetName);
 
     // Delete method
     void deleteById(Integer id);

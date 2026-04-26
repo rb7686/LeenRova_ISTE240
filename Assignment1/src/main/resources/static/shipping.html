@@ -1,0 +1,192 @@
+<!-- Leen Salaheddin Service UID: 400003496 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shipping</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+</head>
+<body>
+<div class="ui container" style="margin-top: 30px;">
+
+  <h2 class="ui header">Shipping Form</h2>
+
+  <!-- Success/error message -->
+  <div id="message"></div>
+
+  <!-- form -->
+  <div class="ui form">
+    <div class="field">
+      <label>Shipping ID</label>
+      <input type="hidden" id="shippingID" placeholder="Shipping ID">
+    </div>
+    <div class="field">
+      <label>Home Number</label>
+      <input type="text" id="homeNumber" placeholder="Home Number">
+    </div>
+    <div class="field">
+      <label>Street Name</label>
+      <input type="text" id="streetName" placeholder="Street Name">
+    </div>
+    <div class="field">
+      <label>City Name</label>
+      <input type="text" id="city" placeholder="City Name">
+    </div>
+
+    <button class="ui primary button" id="submitShipping">Submit</button>
+    <button class="ui button" id="updateShipping">Update</button>
+  </div>
+
+  <br>
+
+  <h2 class="ui header">Shipping List</h2>
+
+  <!-- search bar -->
+  <div class="ui fluid action input" style="margin-bottom: 20px;">
+    <input type="text" id="citySearch" placeholder="Search by city...">
+    <button class="ui button" id="bSearch">Search</button>
+    <button class="ui teal button" id="showAll" style="margin-left: 10px;">Show All</button>
+  </div>
+
+  <!-- table -->
+  <table class="ui celled table" id="shippingTable">
+    <thead>
+    <tr>
+      <th>Shipping ID</th>
+      <th>Home Number</th>
+      <th>Street Name</th>
+      <th>City</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    <!-- Populated by jQuery -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // show all shipping records on page load
+  function showAll() {
+    $.get("/api/shipping/all", function(data) {
+      let rows = "";
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+        rows += `<tr>
+                rows +=  <td>${line.shippingID}</td>
+                rows += <td>${line.homeNumber}</td>
+                rows += <td>${line.streetName}</td>
+                rows += <td>${line.city}</td>
+                rows += <td>
+                        <button class="ui red button" onclick="deleteShipping(${line.shippingID})">Delete</button>
+                        <button class="ui blue button" onclick="editShipping(${line.shippingID}, '${line.homeNumber}', '${line.streetName}', '${line.city}')">Edit</button>
+                    </td>
+                </tr>`;
+      }
+      $("#tableBody").html(rows);
+    });
+  }
+
+  showAll();
+
+  // Show all button
+  $("#showAll").click(function() {
+    $("#citySearch").val("");
+    showAll();
+  });
+
+  // Search by city
+  $("#bSearch").click(function() {
+    let cityVal = $("#citySearch").val();
+
+    $.get("/api/shipping/search?city=" + cityVal, function(data) {
+      let rows = "";
+
+      for (let i = 0; i < data.length; i++) {
+        let line = data[i];
+
+        rows += `<tr>`;
+        rows += `<td>${line.shippingID}</td>`;
+        rows += `<td>${line.homeNumber}</td>`;
+        rows += `<td>${line.streetName}</td>`;
+        rows += `<td>${line.city}</td>`;
+        rows += `<td>
+                        <button class="ui red button" onclick="deleteShipping(${line.shippingID})">Delete</button>
+                        <button class="ui blue button" onclick="editShipping(${line.shippingID}, '${line.homeNumber}', '${line.streetName}', '${line.city}')">Edit</button>
+                     </td>`;
+        rows += `</tr>`;
+      }
+
+      $("#tableBody").html(rows);
+    });
+  });
+
+  // Delete
+  function deleteShipping(id) {
+    $.ajax({
+      url: "/api/shipping/" + id,
+      type: "delete",
+      success: function() {
+        $("#message").html('<div class="ui success message">Deleted successfully!</div>');
+        showAll();
+      }
+    });
+  }
+
+  // Edit — fills the form
+  function editShipping(id, homeNumber, streetName, city) {
+    $("#shippingID").val(id);
+    $("#homeNumber").val(homeNumber);
+    $("#streetName").val(streetName);
+    $("#city").val(city);
+  }
+
+  // Submit (POST)
+  $("#submitShipping").click(function() {
+    $.ajax({
+      url: "/api/shipping",
+      type: "post",
+      contentType: "application/json",
+      data: JSON.stringify({
+        homeNumber: $("#homeNumber").val(),
+        streetName: $("#streetName").val(),
+        city: $("#city").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Shipping added successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+
+  // Update (PUT)
+  $("#updateShipping").click(function() {
+    let id = $("#shippingID").val();
+    $.ajax({
+      url: "/api/shipping/" + id,
+      type: "put",
+      contentType: "application/json",
+      data: JSON.stringify({
+        shippingID: id,
+        homeNumber: $("#homeNumber").val(),
+        streetName: $("#streetName").val(),
+        city: $("#city").val()
+      }),
+      success: function() {
+        $("#message").html('<div class="ui success message">Updated successfully!</div>');
+        showAll();
+      },
+      error: function() {
+        $("#message").html('<div class="ui error message">Something went wrong!</div>');
+      }
+    });
+  });
+</script>
+</body>
+</html>

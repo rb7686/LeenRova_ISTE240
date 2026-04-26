@@ -23,7 +23,7 @@ public class ShippingService {
     }
 
     public List<Shipping> getShippingByCity(String city){
-        return shippingRepository.findShippingByCity(city);
+        return shippingRepository.FindShippingByCity(city);
     }
     public List<Shipping> getAllShippings(){
         return shippingRepository.findAll();

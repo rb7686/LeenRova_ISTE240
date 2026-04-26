@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     //Update method
     @Modifying
     @Query("UPDATE User u SET u.phoneNumber = :phoneNumber WHERE u.phoneNumber = :phoneNumber")
-    int updatephoneNumberById(@Param("User ID") Integer id, @Param("phoneNumber") int phoneNumber);
+    int updatePhoneNumberById(@Param("id") Integer id, @Param("phoneNumber") int phoneNumber);
 
     // Delete method
     void deleteById(Integer id);
