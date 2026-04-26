@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 //created a bean for our Order class which will be used to store order details
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
 public class Order {
 
     // attributes relevant to the Order class such as ID, number of items, order status, and order date

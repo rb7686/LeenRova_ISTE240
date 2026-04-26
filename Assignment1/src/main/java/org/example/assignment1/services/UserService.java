@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public List<User> getUserByFirstName(String firstName){
-        return userRepository.FindByFirstName(firstName);
+        return userRepository.findByFirstName(firstName);
     }
 
 

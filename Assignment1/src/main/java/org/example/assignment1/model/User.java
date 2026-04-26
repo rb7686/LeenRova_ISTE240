@@ -3,6 +3,7 @@
 
 package org.example.assignment1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class User {
     private int phoneNumber;
 
     @OneToMany
+    @JsonIgnore
     private List<Order> orders; //linking to User
 
     // Constructor
@@ -42,10 +44,10 @@ public class User {
 
     public User() {}
     // getters and setters
-    public int getID() {
+    public int getId() {
         return id;
     }
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -20,11 +20,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findById(Integer id);
 
     @Query("SELECT u FROM User u WHERE u.firstName = :firstName")
-    List<User> FindByFirstName(@Param("First Name") String firstName);
+    List<User> findByFirstName(@Param("firstName") String firstName);
 
     //Update method
     @Modifying
-    @Query("UPDATE User u SET u.phoneNumber = :phoneNumber WHERE u.phoneNumber = :phoneNumber")
+    @Query("UPDATE User u SET u.phoneNumber = :phoneNumber WHERE u.id = :id")
     int updatePhoneNumberById(@Param("id") Integer id, @Param("phoneNumber") int phoneNumber);
 
     // Delete method
